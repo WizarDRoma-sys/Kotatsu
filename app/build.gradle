@@ -13,6 +13,14 @@ plugins {
 }
 
 android {
+	signingConfigs {
+		nightlyKey {
+			storeFile rootProject.file('dummy.keystore')
+			storePassword 'password'
+			keyAlias 'mykey'
+			keyPassword 'password'
+		}
+	}
 	compileSdk = 36
 	buildToolsVersion = '35.0.0'
 	namespace = 'org.koitharu.kotatsu'
@@ -51,6 +59,7 @@ android {
 		nightly {
 			initWith release
 			applicationIdSuffix = '.nightly'
+			signingConfig signingConfigs.nightlyKey
 		}
 	}
 	buildFeatures {
@@ -71,11 +80,11 @@ android {
 	}
 	compileOptions {
 		coreLibraryDesugaringEnabled true
-		sourceCompatibility JavaVersion.VERSION_11
-		targetCompatibility JavaVersion.VERSION_11
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
 	}
 	kotlinOptions {
-		jvmTarget = JavaVersion.VERSION_11.toString()
+		jvmTarget = JavaVersion.VERSION_17.toString()
 		freeCompilerArgs += [
 			'-opt-in=kotlin.ExperimentalStdlibApi',
 			'-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
