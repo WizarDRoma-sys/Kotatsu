@@ -19,8 +19,10 @@ data class ReaderState(
 	)
 
 	constructor(manga: Manga, branch: String?) : this(
-		chapterId = manga.chapters?.let {
-			it.firstOrNull { x -> x.branch == branch } ?: it.firstOrNull()
+		chapterId = manga.chapters?.let { chapters ->
+			val branchChapters = chapters.filter { x -> x.branch == branch }
+			val targetChapters = branchChapters.ifEmpty { chapters }
+			targetChapters.minByOrNull { it.number } ?: targetChapters.firstOrNull()
 		}?.id ?: error("Cannot find first chapter"),
 		page = 0,
 		scroll = 0,

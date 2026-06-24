@@ -32,7 +32,7 @@ data class MangaDetails(
     val id: Long
         get() = manga.id
 
-    val allChapters: List<MangaChapter> by lazy { mergeChapters() }
+    val allChapters: List<MangaChapter> by lazy { mergeChapters().sortedBy { it.number } }
 
     val chapters: Map<String?, List<MangaChapter>> by lazy {
         allChapters.groupBy { it.branch }
